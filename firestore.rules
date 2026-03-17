@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Only the authenticated parent can read/write their own safelist
+    match /safelists/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+
+    // Video cache is readable by anyone (kids view is unauthenticated)
+    // Only the server (Admin SDK) can write — client writes are blocked
+    match /videoCache/{channelId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
