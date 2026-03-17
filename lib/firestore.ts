@@ -61,3 +61,20 @@ export async function removeChannelFromSafelist(
   const updated = channels.filter((c) => c.channelId !== channelId);
   await updateDoc(ref, { channels: updated });
 }
+
+export async function getPin(userId: string): Promise<string | null> {
+  const ref = doc(db, "safelists", userId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return null;
+  return snap.data().pin ?? null;
+}
+
+export async function setPin(userId: string, pin: string) {
+  const ref = doc(db, "safelists", userId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) {
+    await setDoc(ref, { channels: [], pin });
+  } else {
+    await updateDoc(ref, { pin });
+  }
+}

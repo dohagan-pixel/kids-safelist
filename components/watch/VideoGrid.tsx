@@ -9,9 +9,10 @@ interface Props {
   videos: VideoItem[];
   loading: boolean;
   error: string | null;
+  onChannelClick?: (channelId: string) => void;
 }
 
-export function VideoGrid({ videos, loading, error }: Props) {
+export function VideoGrid({ videos, loading, error, onChannelClick }: Props) {
   const [playing, setPlaying] = useState<VideoItem | null>(null);
 
   if (loading) {
@@ -54,7 +55,7 @@ export function VideoGrid({ videos, loading, error }: Props) {
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {videos.map((video) => (
-          <VideoCard key={video.videoId} video={video} onClick={setPlaying} />
+          <VideoCard key={video.videoId} video={video} onClick={setPlaying} onChannelClick={onChannelClick} />
         ))}
       </div>
       {playing && (

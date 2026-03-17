@@ -6,6 +6,7 @@ import { VideoItem } from "@/lib/firestore";
 interface Props {
   video: VideoItem;
   onClick: (video: VideoItem) => void;
+  onChannelClick?: (channelId: string) => void;
 }
 
 function timeAgo(dateStr: string): string {
@@ -19,7 +20,7 @@ function timeAgo(dateStr: string): string {
   return `${Math.floor(days / 365)} years ago`;
 }
 
-export function VideoCard({ video, onClick }: Props) {
+export function VideoCard({ video, onClick, onChannelClick }: Props) {
   return (
     <button
       onClick={() => onClick(video)}
@@ -44,7 +45,12 @@ export function VideoCard({ video, onClick }: Props) {
         <p className="font-medium text-gray-900 text-sm leading-snug line-clamp-2 mb-1">
           {video.title}
         </p>
-        <p className="text-xs text-gray-500">{video.channelTitle}</p>
+        <button
+          onClick={(e) => { e.stopPropagation(); onChannelClick?.(video.channelId); }}
+          className="text-xs text-gray-500 hover:text-blue-600 hover:underline text-left"
+        >
+          {video.channelTitle}
+        </button>
         <p className="text-xs text-gray-400 mt-0.5">{timeAgo(video.publishedAt)}</p>
       </div>
     </button>

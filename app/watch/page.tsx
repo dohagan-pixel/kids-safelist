@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { getSafelist, Channel } from "@/lib/firestore";
 import { useVideos } from "@/hooks/useVideos";
 import { VideoGrid } from "@/components/watch/VideoGrid";
+import { Nav } from "@/components/Nav";
 
 function WatchContent() {
   const searchParams = useSearchParams();
@@ -13,6 +14,7 @@ function WatchContent() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [loadingChannels, setLoadingChannels] = useState(true);
   const [channelError, setChannelError] = useState("");
+  const [activeChannelId, setActiveChannelId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!uid) {
@@ -20,14 +22,16 @@ function WatchContent() {
       setLoadingChannels(false);
       return;
     }
-
     getSafelist(uid)
       .then(setChannels)
       .catch(() => setChannelError("Could not load channel list."))
       .finally(() => setLoadingChannels(false));
   }, [uid]);
 
-  const channelIds = channels.map((c) => c.channelId);
+  const channelIds = activeChannelId
+    ? [activeChannelId]
+    : channels.map((c) => c.channelId);
+
   const { videos, loading: loadingVideos, error: videoError } = useVideos(
     loadingChannels ? [] : channelIds
   );
@@ -43,24 +47,44 @@ function WatchContent() {
     );
   }
 
+  const activeChannel = channels.find((c) => c.channelId === activeChannelId) ?? null;
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-2">
-          <span className="text-2xl">📺</span>
-          <span className="font-bold text-gray-900 text-lg">KidsTube</span>
-        </div>
-      </header>
+      <Nav
+        channels={channels}
+        uid={uid}
+        activeChannelId={activeChannelId}
+        onChannelSelect={setActiveChannelId}
+      />
 
       <main className="max-w-6xl mx-auto px-4 py-6">
         {channelError ? (
           <p className="text-center text-red-500 py-12">{channelError}</p>
         ) : (
-          <VideoGrid
-            videos={videos}
-            loading={loadingChannels || loadingVideos}
-            error={videoError}
-          />
+          <>
+            {activeChannel && (
+              <div className="flex items-center gap-3 mb-5">
+                {activeChannel.thumbnailUrl && (
+                  <img
+                    src={activeChannel.thumbnailUrl}
+                    alt={activeChannel.title}
+                    className="w-10 h-10 rounded-full"
+                  />
+                )}
+                <div>
+                  <h1 className="font-bold text-gray-900 text-lg">{activeChannel.title}</h1>
+                  <p className="text-sm text-gray-500">{activeChannel.handle}</p>
+                </div>
+              </div>
+            )}
+            <VideoGrid
+              videos={videos}
+              loading={loadingChannels || loadingVideos}
+              error={videoError}
+              onChannelClick={setActiveChannelId}
+            />
+          </>
         )}
       </main>
     </div>
