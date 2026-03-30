@@ -40,8 +40,7 @@ function WatchContent() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="text-5xl mb-4">📺</div>
-          <p className="text-gray-500">Ask a parent to share your watch link.</p>
+          <p className="text-[#526482]">Ask your admin to share the watch link.</p>
         </div>
       </div>
     );
@@ -50,7 +49,7 @@ function WatchContent() {
   const activeChannel = channels.find((c) => c.channelId === activeChannelId) ?? null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F7FAFF]">
       <Nav
         channels={channels}
         uid={uid}

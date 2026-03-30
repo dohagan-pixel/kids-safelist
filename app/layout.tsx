@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClientProviders } from "@/components/ClientProviders";
 
-const geist = Geist({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "KidsTube – Safe YouTube for Kids",
-  description: "A curated YouTube experience for kids, managed by parents.",
+  title: "GWI Video",
+  description: "Curated Figma AI and UX video content for GWI teams.",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${geist.className} bg-gray-50 min-h-screen antialiased`}>
+      <body className={`${inter.className} bg-[#F7FAFF] min-h-screen antialiased`}>
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

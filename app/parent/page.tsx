@@ -81,7 +81,7 @@ export default function ParentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F7FAFF]">
       <Nav channels={channels} uid={user?.uid}>
         {user?.photoURL && (
           <Image
@@ -105,18 +105,18 @@ export default function ParentPage() {
 
       <main className="max-w-3xl mx-auto px-4 py-8 space-y-6">
         {/* Kid watch link */}
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5">
-          <h2 className="font-semibold text-blue-900 mb-1">Kid Watch Link</h2>
-          <p className="text-sm text-blue-700 mb-3">
-            Bookmark this URL on your kid&apos;s device.
+        <div className="bg-[#FFE8EE] border border-[#FFBACE] rounded-2xl p-5">
+          <h2 className="font-semibold text-[#101720] mb-1">Watch link</h2>
+          <p className="text-sm text-[#526482] mb-3">
+            Share this URL with your team to access the video dashboard.
           </p>
           <div className="flex gap-2 items-center">
-            <code className="flex-1 bg-white border border-blue-200 rounded-lg px-3 py-2 text-sm text-blue-800 truncate">
+            <code className="flex-1 bg-white border border-[#FFBACE] rounded-lg px-3 py-2 text-sm text-[#101720] truncate">
               {watchUrl}
             </code>
             <button
               onClick={() => navigator.clipboard.writeText(watchUrl)}
-              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-shrink-0"
+              className="bg-[#FF0077] hover:bg-[#DC1F69] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-shrink-0"
             >
               Copy
             </button>
@@ -124,7 +124,7 @@ export default function ParentPage() {
               href={watchUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white border border-blue-200 hover:bg-blue-50 text-blue-700 text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-shrink-0"
+              className="bg-white border border-[#FFBACE] hover:bg-[#FFE8EE] text-[#FF0077] text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-shrink-0"
             >
               Open
             </a>
@@ -134,15 +134,15 @@ export default function ParentPage() {
         {/* PIN management */}
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <h2 className="font-semibold text-gray-800 mb-1">Channel PIN</h2>
-          <p className="text-sm text-gray-500 mb-3">
+          <p className="text-sm text-[#526482] mb-3">
             {savedPin
               ? "A PIN is set. Adding channels requires this PIN."
-              : "Set a PIN to prevent kids from adding channels."}
+              : "Set a PIN to restrict who can add channels."}
           </p>
           <div className="flex items-center gap-3">
             <button
               onClick={handleSetPin}
-              className="bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+              className="bg-[#FF0077] hover:bg-[#DC1F69] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
             >
               {savedPin ? "Change PIN" : "Set PIN"}
             </button>
@@ -177,7 +177,7 @@ export default function ParentPage() {
           </h2>
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="w-6 h-6 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
+              <div className="w-6 h-6 rounded-full border-2 border-[#FF0077] border-t-transparent animate-spin" />
             </div>
           ) : (
             <ChannelList channels={channels} onRemove={removeChannel} />

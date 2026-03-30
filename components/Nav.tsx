@@ -28,9 +28,14 @@ export function Nav({ channels, uid, activeChannelId, onChannelSelect, children 
       <div className="max-w-6xl mx-auto px-4">
         {/* Top row */}
         <div className="flex items-center justify-between py-3">
-          <Link href={base} className="flex items-center gap-2">
-            <span className="text-2xl">📺</span>
-            <span className="font-bold text-gray-900 text-lg">KidsTube</span>
+          <Link href={base} className="flex items-center">
+            <Image
+              src="/gwi-logo.svg"
+              alt="GWI"
+              width={66}
+              height={20}
+              priority
+            />
           </Link>
           <div className="flex items-center gap-3">
             {children}
@@ -56,8 +61,8 @@ export function Nav({ channels, uid, activeChannelId, onChannelSelect, children 
               onClick={handleAll}
               className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 !activeChannelId
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  ? "bg-[#FF0077] text-white"
+                  : "bg-[#EBF1FB] text-[#526482] hover:bg-[#DFE7F5]"
               }`}
             >
               All
@@ -68,8 +73,8 @@ export function Nav({ channels, uid, activeChannelId, onChannelSelect, children 
                 onClick={() => handleChannel(ch.channelId)}
                 className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   activeChannelId === ch.channelId
-                    ? "bg-gray-900 text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    ? "bg-[#FF0077] text-white"
+                    : "bg-[#EBF1FB] text-[#526482] hover:bg-[#DFE7F5]"
                 }`}
               >
                 {ch.thumbnailUrl && (
